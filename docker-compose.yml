@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  # =========================================================
+  # 1. PostgreSQL Relational Database Service
+  # =========================================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: skyway-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-skyway_admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-skyway_secure_pass}
+      POSTGRES_DB: ${POSTGRES_DB:-skyway_airlines}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - skyway_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-skyway_admin} -d ${POSTGRES_DB:-skyway_airlines}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - skyway-network
+
+  # =========================================================
+  # 2. SkyWay Airlines Web Application & API
+  # =========================================================
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: skyway-app
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOST: "0.0.0.0"
+      DATABASE_URL: postgres://${POSTGRES_USER:-skyway_admin}:${POSTGRES_PASSWORD:-skyway_secure_pass}@postgres:5432/${POSTGRES_DB:-skyway_airlines}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    ports:
+      - "3000:3000"
+    networks:
+      - skyway-network
+
+# =========================================================
+# Volumes & Networks
+# =========================================================
+volumes:
+  skyway_pgdata:
+    driver: local
+
+networks:
+  skyway-network:
+    driver: bridge

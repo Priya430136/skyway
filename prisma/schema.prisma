@@ -1,0 +1,227 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum CabinClass {
+  ECONOMY
+  PREMIUM_ECONOMY
+  BUSINESS
+  FIRST
+}
+
+enum FlightStatus {
+  SCHEDULED
+  BOARDING
+  ACTIVE
+  ON_TIME
+  DELAYED
+  LANDED
+  CANCELLED
+}
+
+enum BookingStatus {
+  CONFIRMED
+  CHECKED_IN
+  BOARDED
+  CANCELLED
+  REFUNDED
+}
+
+enum FrequentFlyerTier {
+  SILVER
+  GOLD
+  PLATINUM
+  SOLITAIRE
+}
+
+enum TicketCategory {
+  SPECIAL_ASSISTANCE
+  BAGGAGE_CLAIM
+  REFUND_REQUEST
+  FLIGHT_CHANGE
+  MEAL_PREFERENCE
+  GENERAL_INQUIRY
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+// 1. Airports
+model Airport {
+  code          String   @id @db.VarChar(10)
+  name          String
+  city          String
+  country       String
+  latitude      Decimal  @db.Decimal(9, 6)
+  longitude     Decimal  @db.Decimal(9, 6)
+  timezone      String
+  activeRunways String[] @default([]) @map("active_runways")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  departingFlights Flight[] @relation("OriginAirport")
+  arrivingFlights   Flight[] @relation("DestinationAirport")
+
+  @@map("airports")
+}
+
+// 2. Flights
+model Flight {
+  flightNumber           String       @id @map("flight_number") @db.VarChar(20)
+  originCode             String       @map("origin_code") @db.VarChar(10)
+  destinationCode        String       @map("destination_code") @db.VarChar(10)
+  departureTime          String       @map("departure_time")
+  arrivalTime            String       @map("arrival_time")
+  duration               String
+  aircraft               String
+  status                 FlightStatus @default(SCHEDULED)
+  gate                   String?      @default("TBD") @db.VarChar(20)
+  terminal               String?      @default("T3") @db.VarChar(20)
+  priceEconomy           Int          @map("price_economy")
+  pricePremium           Int          @map("price_premium")
+  priceBusiness          Int          @map("price_business")
+  priceFirst             Int          @map("price_first")
+  seatsEconomyAvailable  Int          @default(50) @map("seats_economy_available")
+  seatsPremiumAvailable  Int          @default(15) @map("seats_premium_available")
+  seatsBusinessAvailable Int          @default(8) @map("seats_business_available")
+  seatsFirstAvailable    Int          @default(4) @map("seats_first_available")
+  onTimePct              Int          @default(95) @map("on_time_pct")
+  baggageCarousel        String?      @map("baggage_carousel") @db.VarChar(50)
+  delayMinutes           Int          @default(0) @map("delay_minutes")
+  createdAt              DateTime     @default(now()) @map("created_at")
+  updatedAt              DateTime     @updatedAt @map("updated_at")
+
+  origin      Airport   @relation("OriginAirport", fields: [originCode], references: [code])
+  destination Airport   @relation("DestinationAirport", fields: [destinationCode], references: [code])
+  bookings    Booking[]
+
+  @@index([originCode, destinationCode])
+  @@index([status])
+  @@map("flights")
+}
+
+// 3. Passengers
+model Passenger {
+  id                String            @id @default(uuid()) @db.Uuid
+  fullName          String            @map("full_name")
+  email             String            @unique
+  phone             String?           @db.VarChar(30)
+  frequentFlyerTier FrequentFlyerTier @default(SILVER) @map("frequent_flyer_tier")
+  milesBalance      Int               @default(0) @map("miles_balance")
+  passportNumber    String?           @map("passport_number") @db.VarChar(30)
+  nationality       String?           @default("IN") @db.VarChar(10)
+  createdAt         DateTime          @default(now()) @map("created_at")
+  updatedAt         DateTime          @updatedAt @map("updated_at")
+
+  bookings Booking[]
+  tickets  SupportTicket[]
+
+  @@index([email])
+  @@map("passengers")
+}
+
+// 4. Bookings
+model Booking {
+  pnr               String        @id @db.VarChar(12)
+  flightNumber      String        @map("flight_number") @db.VarChar(20)
+  passengerId       String?       @map("passenger_id") @db.Uuid
+  passengerName     String        @map("passenger_name")
+  passengerEmail    String        @map("passenger_email")
+  passengerPhone    String?       @default("+91 98765 43210") @map("passenger_phone") @db.VarChar(30)
+  cabinClass        CabinClass    @default(ECONOMY) @map("cabin_class")
+  seatNumber        String        @map("seat_number") @db.VarChar(10)
+  isCheckedIn       Boolean       @default(false) @map("is_checked_in")
+  boardingPassId    String?       @map("boarding_pass_id")
+  baggageCount      Int           @default(1) @map("baggage_count")
+  specialAssistance String?       @map("special_assistance")
+  mealPreference    String?       @map("meal_preference")
+  totalPaid         Int           @map("total_paid")
+  currency          String        @default("INR") @db.VarChar(10)
+  bookingDate       String        @map("booking_date")
+  status            BookingStatus @default(CONFIRMED)
+  createdAt         DateTime      @default(now()) @map("created_at")
+  updatedAt         DateTime      @updatedAt @map("updated_at")
+
+  flight    Flight     @relation(fields: [flightNumber], references: [flightNumber], onDelete: Restrict)
+  passenger Passenger? @relation(fields: [passengerId], references: [id], onDelete: SetNull)
+
+  @@index([flightNumber])
+  @@index([passengerEmail])
+  @@index([status])
+  @@map("bookings")
+}
+
+// 5. Support Tickets
+model SupportTicket {
+  id             String         @id @db.VarChar(30)
+  passengerId    String?        @map("passenger_id") @db.Uuid
+  passengerEmail String         @map("passenger_email")
+  passengerName  String         @map("passenger_name")
+  pnr            String?        @db.VarChar(12)
+  category       TicketCategory @default(GENERAL_INQUIRY)
+  subject        String
+  status         TicketStatus   @default(OPEN)
+  priority       TicketPriority @default(MEDIUM)
+  messages       Json           @default("[]")
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @updatedAt @map("updated_at")
+
+  passenger Passenger? @relation(fields: [passengerId], references: [id], onDelete: SetNull)
+
+  @@index([passengerEmail])
+  @@index([pnr])
+  @@map("support_tickets")
+}
+
+// 6. Operations & Flight Dispatch Logs
+model OpsLog {
+  id           String   @id @default(uuid()) @db.Uuid
+  flightNumber String?  @map("flight_number") @db.VarChar(20)
+  eventType    String   @map("event_type") @db.VarChar(50)
+  message      String
+  severity     String   @default("INFO") @db.VarChar(20)
+  timestamp    DateTime @default(now())
+
+  @@index([flightNumber])
+  @@index([timestamp])
+  @@map("ops_logs")
+}
+
+// 7. Post-Flight Satisfaction Feedback & Surveys
+model Feedback {
+  id                      String   @id @default(uuid()) @db.Uuid
+  pnr                     String?  @db.VarChar(12)
+  flightNumber            String?  @map("flight_number") @db.VarChar(20)
+  passengerName           String   @map("passenger_name")
+  passengerEmail          String   @map("passenger_email")
+  overallRating           Int      @map("overall_rating")
+  flightCrewRating        Int?     @default(5) @map("flight_crew_rating")
+  cabinCleanlinessRating  Int?     @default(5) @map("cabin_cleanliness_rating")
+  foodBeverageRating      Int?     @default(5) @map("food_beverage_rating")
+  punctualityRating       Int?     @default(5) @map("punctuality_rating")
+  recommendAirline        Boolean  @default(true) @map("recommend_airline")
+  comments                String?
+  highlightTags           Json     @default("[]") @map("highlight_tags")
+  followUpRequested       Boolean  @default(false) @map("follow_up_requested")
+  createdAt               DateTime @default(now()) @map("created_at")
+
+  @@index([passengerEmail])
+  @@index([pnr])
+  @@index([flightNumber])
+  @@map("feedback")
+}

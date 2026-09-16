@@ -1,0 +1,6 @@
+{
+  "name": "WingBound Hub",
+  "description": "A comprehensive airline operations, passenger booking, customer support, and administrative management platform (SkyWay).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
