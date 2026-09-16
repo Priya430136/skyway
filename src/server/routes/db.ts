@@ -21,9 +21,28 @@ dbRouter.get("/status", async (req, res) => {
       "support_tickets",
       "ops_logs",
       "feedback",
+      "users",
+      "notifications",
     ],
     timestamp: new Date().toISOString(),
   });
+});
+
+// POST /api/db/migrate - Run DDL migration on live PostgreSQL
+dbRouter.post("/migrate", async (req, res) => {
+  try {
+    const { runMigrations } = await import("../../db/migrate");
+    const result = await runMigrations();
+    if (!result.success) {
+      return res.status(503).json(result);
+    }
+    return res.json(result);
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      error: error.message || "Failed to execute database migrations",
+    });
+  }
 });
 
 // POST /api/db/seed

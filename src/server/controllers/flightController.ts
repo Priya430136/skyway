@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { prisma } from "../../lib/prisma";
-import { FlightStatus } from "@prisma/client";
+import { FlightStatus } from "../types/prismaEnums";
 import { store } from "../store";
 
 /**

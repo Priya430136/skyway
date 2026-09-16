@@ -1,5 +1,5 @@
 import { prisma } from "../../lib/prisma";
-import { CabinClass, BookingStatus, FlightStatus, Prisma } from "@prisma/client";
+import { CabinClass, BookingStatus, FlightStatus, Prisma } from "../types/prismaEnums";
 import { store, type BookingRecord } from "../store";
 
 export interface CreateBookingInput {

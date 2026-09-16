@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { BookingService } from "../services/bookingService";
 import { store } from "../store";
+import { NotificationService } from "../services/notificationService";
 
 export const bookingsRouter = Router();
 
@@ -112,6 +113,14 @@ bookingsRouter.post("/", async (req, res) => {
       passportNumber,
       nationality,
     });
+
+    // Asynchronously dispatch transactional confirmation (email + SMS)
+    if (bookingResult.booking) {
+      NotificationService.sendBookingConfirmation(
+        bookingResult.booking as any,
+        bookingResult.flight as any
+      ).catch((err) => console.warn("[Bookings] Notification error:", err));
+    }
 
     return res.status(201).json({
       success: true,

@@ -2,6 +2,7 @@ import { Router } from "express";
 import Stripe from "stripe";
 import { BookingService } from "../services/bookingService";
 import { store } from "../store";
+import { NotificationService } from "../services/notificationService";
 
 export const paymentsRouter = Router();
 
@@ -336,4 +337,158 @@ paymentsRouter.get("/transactions", (req, res) => {
     total: transactions.length,
     transactions,
   });
+});
+
+// POST /api/payments/webhook - Real Stripe Webhook Handler
+paymentsRouter.post("/webhook", async (req, res) => {
+  const stripe = getStripe();
+  const sig = req.headers["stripe-signature"] as string | undefined;
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+  let event: any;
+
+  if (stripe && webhookSecret && sig) {
+    try {
+      // In Express, if raw body is preserved or available
+      const rawBody = (req as any).rawBody || (typeof req.body === "string" ? req.body : JSON.stringify(req.body));
+      event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
+    } catch (err: any) {
+      console.warn("[Stripe Webhook Verification Error]:", err.message);
+      return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+  } else {
+    event = req.body;
+  }
+
+  if (!event || !event.type) {
+    return res.status(400).json({ error: "Missing event body or type" });
+  }
+
+  try {
+    switch (event.type) {
+      case "payment_intent.succeeded": {
+        const paymentIntent = event.data?.object;
+        const pnr = paymentIntent?.metadata?.pnr;
+        const flightNumber = paymentIntent?.metadata?.flightNumber;
+        const passengerEmail = paymentIntent?.metadata?.passengerEmail || paymentIntent?.receipt_email;
+        const passengerName = paymentIntent?.metadata?.passengerName || "Valued Passenger";
+        const amount = paymentIntent?.amount ? Math.round(paymentIntent.amount / 100) : 0;
+
+        console.log(`[Stripe Webhook] PaymentIntent succeeded for PNR: ${pnr}, amount: ₹${amount}`);
+
+        if (pnr) {
+          // Confirm booking
+          store.updateBooking(pnr, { status: "CONFIRMED" });
+          const booking = store.getBooking(pnr);
+          const flight = booking ? store.getFlight(booking.flightNumber) : null;
+
+          // Dispatch confirmation notifications
+          if (booking) {
+            await NotificationService.sendBookingConfirmation(booking, flight);
+          }
+
+          // Record transaction log
+          const newTxn: PaymentTransaction = {
+            id: `txn_${paymentIntent.id || pnr}`,
+            paymentIntentId: paymentIntent.id || `pi_${pnr}`,
+            chargeId: paymentIntent.latest_charge || `ch_${pnr}`,
+            pnr,
+            flightNumber: flightNumber || booking?.flightNumber || "SW101",
+            passengerEmail: passengerEmail || booking?.passengerEmail || "guest@skyway.aero",
+            passengerName: passengerName || booking?.passengerName || "Passenger",
+            amount: amount || booking?.totalPaid || 5984,
+            currency: (paymentIntent.currency || "inr").toUpperCase(),
+            status: "succeeded",
+            paymentMethodType: "card (stripe_webhook)",
+            createdAt: new Date().toISOString(),
+            receiptNumber: `RCP-${pnr}-${Date.now().toString().slice(-4)}`,
+            metadata: { webhookProcessed: true, eventId: event.id },
+          };
+          transactions.unshift(newTxn);
+        }
+        break;
+      }
+
+      case "payment_intent.payment_failed": {
+        const paymentIntent = event.data?.object;
+        const pnr = paymentIntent?.metadata?.pnr;
+        console.warn(`[Stripe Webhook] Payment failed for PNR: ${pnr}`);
+        if (pnr) {
+          store.updateBooking(pnr, { status: "PAYMENT_FAILED" });
+        }
+        break;
+      }
+
+      case "charge.refunded": {
+        const charge = event.data?.object;
+        const pnr = charge?.metadata?.pnr;
+        console.log(`[Stripe Webhook] Charge refunded for PNR: ${pnr}`);
+        if (pnr) {
+          store.updateBooking(pnr, { status: "REFUNDED" });
+        }
+        break;
+      }
+
+      default:
+        console.log(`[Stripe Webhook] Unhandled event type: ${event.type}`);
+    }
+
+    return res.json({ received: true, eventType: event.type });
+  } catch (err: any) {
+    console.error("[Stripe Webhook Handler Error]:", err);
+    return res.status(500).json({ error: "Failed to process webhook event", details: err.message });
+  }
+});
+
+// POST /api/payments/webhook/simulate - Test & preview webhook trigger
+paymentsRouter.post("/webhook/simulate", async (req, res) => {
+  const { eventType = "payment_intent.succeeded", pnr, flightNumber, amount, passengerEmail, passengerName } = req.body || {};
+
+  const targetPnr = pnr || "SW4K8L";
+  const booking = store.getBooking(targetPnr);
+
+  const simulatedPayload = {
+    id: `evt_sim_${Date.now()}`,
+    type: eventType,
+    data: {
+      object: {
+        id: `pi_sim_${Date.now()}`,
+        amount: (amount || booking?.totalPaid || 48900) * 100, // cents/paise
+        currency: "inr",
+        status: eventType === "payment_intent.succeeded" ? "succeeded" : "failed",
+        metadata: {
+          pnr: targetPnr,
+          flightNumber: flightNumber || booking?.flightNumber || "SW502",
+          passengerEmail: passengerEmail || booking?.passengerEmail || "rahul.sharma@example.com",
+          passengerName: passengerName || booking?.passengerName || "Rahul Sharma",
+        },
+      },
+    },
+  };
+
+  // Dispatch internal webhook simulation
+  try {
+    if (eventType === "payment_intent.succeeded") {
+      store.updateBooking(targetPnr, { status: "CONFIRMED" });
+      const updatedBooking = store.getBooking(targetPnr);
+      const flight = updatedBooking ? store.getFlight(updatedBooking.flightNumber) : null;
+      if (updatedBooking) {
+        await NotificationService.sendBookingConfirmation(updatedBooking, flight);
+      }
+    } else if (eventType === "payment_intent.payment_failed") {
+      store.updateBooking(targetPnr, { status: "PAYMENT_FAILED" });
+    }
+
+    return res.json({
+      success: true,
+      message: `Simulated webhook event ${eventType} executed successfully for PNR ${targetPnr}.`,
+      simulatedPayload,
+      booking: store.getBooking(targetPnr),
+    });
+  } catch (err: any) {
+    return res.status(500).json({
+      success: false,
+      error: err.message || "Simulation failed",
+    });
+  }
 });

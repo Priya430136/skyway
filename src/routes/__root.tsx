@@ -10,6 +10,36 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
+if (typeof window !== "undefined") {
+  const origConsoleError = console.error;
+  console.error = function (...args: any[]) {
+    const combined = args
+      .map((item) => {
+        if (typeof item === "string") return item;
+        if (item && typeof item.message === "string") return item.message;
+        try {
+          return JSON.stringify(item);
+        } catch {
+          return String(item);
+        }
+      })
+      .join(" ");
+
+    if (
+      combined.includes("fdprocessedid") ||
+      combined.includes("bis_skin_checked") ||
+      (combined.includes("A tree hydrated but some attributes of the server rendered HTML") &&
+        (combined.includes("fdprocessedid") ||
+          combined.includes("browser extension") ||
+          combined.includes("extension") ||
+          combined.includes("bis_skin_checked")))
+    ) {
+      return;
+    }
+    return origConsoleError.apply(console, args);
+  };
+}
+
 import appCss from "../styles.css?url";
 import { Toaster } from "@/components/ui/sonner";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -120,12 +150,68 @@ function RootShell({ children }: { children: ReactNode }) {
                 document.documentElement.classList.remove('dark');
                 document.documentElement.style.colorScheme = 'light';
               } catch (e) {}
+
+              // Prevent browser extensions (e.g. McAfee, LastPass, Dashlane, Bitwarden) from injecting attributes that cause hydration mismatches
+              try {
+                var origSetAttr = Element.prototype.setAttribute;
+                Element.prototype.setAttribute = function(name, value) {
+                  if (name === 'fdprocessedid' || name === 'bis_skin_checked') {
+                    return;
+                  }
+                  return origSetAttr.apply(this, arguments);
+                };
+              } catch (e) {}
+
+              try {
+                var observer = new MutationObserver(function(mutations) {
+                  for (var i = 0; i < mutations.length; i++) {
+                    var m = mutations[i];
+                    if (m.type === 'attributes') {
+                      if (m.attributeName === 'fdprocessedid' || m.attributeName === 'bis_skin_checked') {
+                        (m.target).removeAttribute(m.attributeName);
+                      }
+                    }
+                  }
+                });
+                observer.observe(document.documentElement, {
+                  subtree: true,
+                  attributes: true,
+                  attributeFilter: ['fdprocessedid', 'bis_skin_checked'],
+                });
+              } catch (e) {}
+
+              // Suppress browser extension hydration mismatch warnings in console
+              try {
+                var origConsoleError = console.error;
+                console.error = function() {
+                  var args = Array.prototype.slice.call(arguments);
+                  var combined = args.map(function(item) {
+                    if (typeof item === 'string') return item;
+                    if (item && typeof item.message === 'string') return item.message;
+                    try { return JSON.stringify(item); } catch (e) { return String(item); }
+                  }).join(' ');
+
+                  if (
+                    combined.indexOf('fdprocessedid') !== -1 ||
+                    combined.indexOf('bis_skin_checked') !== -1 ||
+                    (combined.indexOf('A tree hydrated but some attributes of the server rendered HTML') !== -1 && (
+                      combined.indexOf('fdprocessedid') !== -1 ||
+                      combined.indexOf('browser extension') !== -1 ||
+                      combined.indexOf('extension') !== -1 ||
+                      combined.indexOf('bis_skin_checked') !== -1
+                    ))
+                  ) {
+                    return;
+                  }
+                  return origConsoleError.apply(console, args);
+                };
+              } catch (e) {}
             `,
           }}
         />
         <HeadContent />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         {children}
         <Scripts />
       </body>

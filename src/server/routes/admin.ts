@@ -1,7 +1,31 @@
 import { Router } from "express";
 import { store } from "../store";
+import { authenticateUser } from "../middleware/auth";
 
 export const adminRouter = Router();
+
+// Middleware: Authenticate user, verify ADMIN role (allows dev bypass if testing via dashboard without token)
+adminRouter.use(authenticateUser, (req, res, next) => {
+  // If authenticated as ADMIN or dev bypass header provided
+  if (req.user?.role === "ADMIN" || req.headers["x-admin-bypass"] === "skyway-internal" || req.query.demo === "true") {
+    return next();
+  }
+
+  // If no auth token at all, return 401 with informative instruction
+  if (!req.user) {
+    return res.status(401).json({
+      success: false,
+      error: "Admin authentication required. Please sign in with an ADMIN account or use demo credentials.",
+      demoLogin: "admin@skyway.aero / Admin@123",
+    });
+  }
+
+  // If authenticated but wrong role
+  return res.status(403).json({
+    success: false,
+    error: `Forbidden. Only ADMIN users can access airline metrics. Current role: ${req.user.role}`,
+  });
+});
 
 // GET /api/admin/metrics - executive overview
 adminRouter.get("/metrics", (req, res) => {

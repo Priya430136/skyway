@@ -146,7 +146,7 @@ function Landing() {
   const accountHref = showAccount ? ROLE_HOME[user.role] : "/signin";
 
   return (
-    <div id="top" className="min-h-screen bg-background text-foreground">
+    <div id="top" className="min-h-screen bg-background text-foreground" suppressHydrationWarning>
       {/* ─── NAV ─── */}
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
@@ -789,7 +789,7 @@ function FlightSearchWidget({ onSearch }: { onSearch: (routeKey: string) => void
   };
 
   return (
-    <form onSubmit={handleSearchSubmit} className="rounded-2xl border border-white/15 bg-white/10 p-5 shadow-2xl shadow-black/30 backdrop-blur-2xl md:p-6">
+    <form onSubmit={handleSearchSubmit} className="rounded-2xl border border-white/15 bg-white/10 p-5 shadow-2xl shadow-black/30 backdrop-blur-2xl md:p-6" suppressHydrationWarning>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           {(["round","one"] as const).map((k) => (

@@ -319,7 +319,7 @@ export function LandingFaqSection() {
   }, [selectedCategory, searchQuery]);
 
   return (
-    <section id="faq" className="relative overflow-hidden bg-sky-mist/60 py-24 dark:bg-background/40">
+    <section id="faq" className="relative overflow-hidden bg-sky-mist/60 py-24 dark:bg-background/40" suppressHydrationWarning>
       {/* Decorative navy & sky atmospheric background accents */}
       <div className="pointer-events-none absolute -top-40 -left-40 h-96 w-96 rounded-full bg-sky-accent/5 blur-3xl" />
       <div className="pointer-events-none absolute top-1/2 -right-40 h-96 w-96 rounded-full bg-sky-dark/5 blur-3xl dark:bg-sky-accent/10" />

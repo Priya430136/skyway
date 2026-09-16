@@ -138,3 +138,32 @@ export const feedback = pgTable("feedback", {
   followUpRequested: boolean("follow_up_requested").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
+
+// 8. Users Table (Admin, Dispatchers, Staff, and Registered Passengers)
+export const users = pgTable("users", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  email: text("email").notNull().unique(),
+  passwordHash: text("password_hash").notNull(),
+  fullName: text("full_name").notNull(),
+  role: varchar("role", { length: 30 }).default("PASSENGER").notNull(), // ADMIN, OPERATIONS, AGENT, PASSENGER
+  frequentFlyerTier: varchar("frequent_flyer_tier", { length: 30 }).default("SILVER"),
+  milesBalance: integer("miles_balance").default(0),
+  avatarUrl: text("avatar_url"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+// 9. Transactional Notifications Dispatch Table
+export const notifications = pgTable("notifications", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  recipientEmail: text("recipient_email"),
+  recipientPhone: varchar("recipient_phone", { length: 30 }),
+  channel: varchar("channel", { length: 20 }).notNull(), // EMAIL, SMS, PUSH, SYSTEM
+  type: varchar("type", { length: 50 }).notNull(), // BOOKING_CONFIRMATION, CHECKIN_PASS, FLIGHT_ALERT, SUPPORT_UPDATE
+  subject: text("subject").notNull(),
+  body: text("body").notNull(),
+  metadata: jsonb("metadata").$type<Record<string, any>>().default({}),
+  status: varchar("status", { length: 30 }).default("DELIVERED").notNull(), // DELIVERED, QUEUED, FAILED, SIMULATED
+  deliveredAt: timestamp("delivered_at").defaultNow().notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});

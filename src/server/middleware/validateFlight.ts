@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { z, ZodError } from "zod";
-import { FlightStatus } from "@prisma/client";
+import { FlightStatus } from "../types/prismaEnums";
 
 /**
  * Zod Schema for creating a new Flight matching Prisma model definitions

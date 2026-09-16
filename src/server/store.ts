@@ -105,6 +105,32 @@ export interface FeedbackRecord {
   createdAt: string;
 }
 
+export interface UserRecord {
+  id: string;
+  email: string;
+  passwordHash: string;
+  fullName: string;
+  role: "ADMIN" | "OPERATIONS" | "AGENT" | "PASSENGER";
+  frequentFlyerTier?: string;
+  milesBalance?: number;
+  avatarUrl?: string;
+  createdAt: string;
+}
+
+export interface NotificationRecord {
+  id: string;
+  recipientEmail?: string;
+  recipientPhone?: string;
+  channel: "EMAIL" | "SMS" | "PUSH" | "SYSTEM";
+  type: "BOOKING_CONFIRMATION" | "CHECKIN_PASS" | "FLIGHT_ALERT" | "PAYMENT_CONFIRMATION" | "SUPPORT_UPDATE";
+  subject: string;
+  body: string;
+  metadata?: Record<string, any>;
+  status: "DELIVERED" | "QUEUED" | "SIMULATED" | "FAILED";
+  deliveredAt: string;
+  createdAt: string;
+}
+
 export const AIRPORTS: AirportData[] = [
   { code: "DEL", name: "Indira Gandhi International", city: "Delhi", country: "India", lat: 28.5562, lng: 77.1000, timezone: "Asia/Kolkata", temperature: "28°C", weather: "Clear Sky", activeRunways: ["11/29", "10/28"] },
   { code: "BOM", name: "Chhatrapati Shivaji Maharaj", city: "Mumbai", country: "India", lat: 19.0896, lng: 72.8656, timezone: "Asia/Kolkata", temperature: "29°C", weather: "Partly Cloudy", activeRunways: ["09/27", "14/32"] },
@@ -476,6 +502,53 @@ class BackendStore {
   bookings = [...INITIAL_BOOKINGS];
   tickets = [...INITIAL_TICKETS];
   feedback = [...INITIAL_FEEDBACK];
+  users: UserRecord[] = [
+    {
+      id: "usr-admin-01",
+      email: "admin@skyway.aero",
+      passwordHash: "$2a$10$wE99Y2d4nF2Psp4z0tE79uQp5G8Xl0u1uX9X7x6p1zX1a2b3c4d5e", // Admin@123
+      fullName: "SkyWay Administrator",
+      role: "ADMIN",
+      frequentFlyerTier: "SOLITAIRE",
+      milesBalance: 500000,
+      createdAt: "2026-01-01T00:00:00Z",
+    },
+    {
+      id: "usr-ops-01",
+      email: "ops@skyway.aero",
+      passwordHash: "$2a$10$wE99Y2d4nF2Psp4z0tE79uQp5G8Xl0u1uX9X7x6p1zX1a2b3c4d5e", // Ops@123
+      fullName: "Flight Dispatcher Delhi",
+      role: "OPERATIONS",
+      frequentFlyerTier: "PLATINUM",
+      milesBalance: 120000,
+      createdAt: "2026-01-01T00:00:00Z",
+    },
+    {
+      id: "usr-passenger-01",
+      email: "passenger@skyway.aero",
+      passwordHash: "$2a$10$wE99Y2d4nF2Psp4z0tE79uQp5G8Xl0u1uX9X7x6p1zX1a2b3c4d5e", // Skyway@123
+      fullName: "Priya Sehrawat",
+      role: "PASSENGER",
+      frequentFlyerTier: "PLATINUM",
+      milesBalance: 48500,
+      createdAt: "2026-02-15T00:00:00Z",
+    },
+  ];
+  notifications: NotificationRecord[] = [
+    {
+      id: "notif-001",
+      recipientEmail: "sehrawatpriya430@gmail.com",
+      recipientPhone: "+91 98765 43210",
+      channel: "EMAIL",
+      type: "BOOKING_CONFIRMATION",
+      subject: "SkyWay Airlines: Booking Confirmed (PNR SW9M2P)",
+      body: "Your booking for flight SW128 from DEL to BOM on 2026-08-15 is confirmed. Seat 3A (Business).",
+      metadata: { pnr: "SW9M2P", flightNumber: "SW128" },
+      status: "DELIVERED",
+      deliveredAt: "2026-08-15T08:00:00Z",
+      createdAt: "2026-08-15T08:00:00Z",
+    },
+  ];
 
   getFlight(flightNumber: string) {
     const clean = flightNumber.replace(/[^A-Za-z0-9]/g, "").toUpperCase();

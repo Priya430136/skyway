@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { store } from "../store";
+import { NotificationService } from "../services/notificationService";
 
 export const checkinRouter = Router();
 
@@ -51,6 +52,13 @@ checkinRouter.post("/complete", (req, res) => {
   });
 
   const flight = store.getFlight(booking.flightNumber);
+
+  // Asynchronously dispatch digital boarding pass via email/SMS
+  if (updated) {
+    NotificationService.sendCheckInConfirmation(updated, flight).catch((err) =>
+      console.warn("[CheckIn] Notification dispatch error:", err)
+    );
+  }
 
   res.json({
     success: true,
