@@ -88,6 +88,8 @@ export default defineConfig({
     server: { entry: "src/server.ts" },
   },
   nitro: {
+    preset: "node-server",
+    serverDir: "server",
     hooks: {
       "rollup:before"(_nitro: any, rollupConfig: any) {
         if (rollupConfig) {
@@ -127,7 +129,7 @@ export default defineConfig({
     server: {
       host: "0.0.0.0",
       port: 3000,
-      strictPort: true,
+      strictPort: false,
     },
     plugins: [expressApiPlugin(), suppressModuleDirectivesPlugin()],
     build: {

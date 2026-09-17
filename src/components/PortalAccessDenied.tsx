@@ -17,17 +17,12 @@ const PORTAL_NAMES: Record<Role, string> = {
 };
 
 export function PortalAccessDenied({ requiredRole }: { requiredRole: Role }) {
-  const { user, signOut, signInDemo, isAuthenticated } = useAuth();
+  const { user, signOut, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const currentRole = user?.role ?? "passenger";
   const CurrentIcon = PORTAL_ICONS[currentRole] || User;
   const TargetIcon = PORTAL_ICONS[requiredRole] || ShieldAlert;
-
-  const handleInstantSwitch = () => {
-    signInDemo(requiredRole);
-    navigate({ to: ROLE_HOME[requiredRole] });
-  };
 
   const handleSwitchAccount = async () => {
     await signOut();
@@ -116,14 +111,6 @@ export function PortalAccessDenied({ requiredRole }: { requiredRole: Role }) {
 
           {/* Action CTAs */}
           <div className="mt-8 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
-            <button
-              onClick={handleInstantSwitch}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-950/20 transition hover:bg-amber-500 active:scale-95"
-            >
-              <ShieldCheck className="h-4 w-4" />
-              Instant Enter as {ROLE_LABEL[requiredRole]}
-            </button>
-
             <button
               onClick={handleSwitchAccount}
               className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background px-4 py-2.5 text-sm font-medium text-foreground transition hover:bg-muted active:scale-95"

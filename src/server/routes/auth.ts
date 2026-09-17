@@ -52,7 +52,7 @@ authRouter.post("/register", async (req, res) => {
       password,
       fullName,
       phone,
-      role: role || "PASSENGER",
+      role: "PASSENGER",
     });
 
     return res.status(201).json({
@@ -86,8 +86,10 @@ authRouter.get("/me", requireAuth, async (req, res) => {
   });
 });
 
-// GET /api/auth/demo-credentials - Test credentials for quick login in development / demonstration
 authRouter.get("/demo-credentials", (req, res) => {
+  if (process.env.NODE_ENV === "production") {
+    return res.status(404).json({ success: false, error: "Not found" });
+  }
   res.json({
     success: true,
     accounts: [

@@ -27,7 +27,7 @@ const ROLES: { key: Role; title: string; sub: string; hint: string }[] = [
 ];
 
 function SignInPage() {
-  const { signIn, signUp, signInWithGoogle, signInDemo, switchRole, isAuthenticated, ready, user, hasRole } = useAuth();
+  const { signIn, signUp, signInWithGoogle, isAuthenticated, ready, user, hasRole } = useAuth();
   const navigate = useNavigate();
   const { redirect } = useSearch({ from: "/signin" });
 
@@ -110,16 +110,6 @@ function SignInPage() {
     }
   }, [ready, isAuthenticated, user, navigate, redirect, hasRole]);
 
-  const onQuickDemo = (demoRole: Role) => {
-    signInDemo(demoRole);
-    toast.success(`Signed in as ${ROLE_LABEL[demoRole]}`);
-    if (redirect && ((redirect.startsWith("/admin") && demoRole === "admin") || (redirect.startsWith("/ops") && demoRole === "ops") || (redirect.startsWith("/support") && demoRole === "support"))) {
-      navigate({ to: redirect, replace: true });
-    } else {
-      navigate({ to: ROLE_HOME[demoRole], replace: true });
-    }
-  };
-
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !password) return;
@@ -171,7 +161,7 @@ function SignInPage() {
   };
 
   const onForgot = () => {
-    toast.info("Password reset link sent to your registered email.");
+    toast.info("Please contact SkyWay support to reset your password.");
   };
 
   return (
@@ -227,13 +217,6 @@ function SignInPage() {
                     </div>
                     <div className="mt-3 font-display text-2xl tracking-tight text-foreground">{r.title}</div>
                     <div className="mt-1 text-xs text-muted-foreground">{r.sub}</div>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => onQuickDemo(r.key)}
-                    className="mt-3 w-full rounded-lg border border-sky-accent/30 bg-sky-accent/5 px-2.5 py-1.5 text-xs font-semibold text-sky-accent hover:bg-sky-accent hover:text-white transition-colors"
-                  >
-                    ⚡ Quick Enter as {r.title}
                   </button>
                 </div>
               );
@@ -311,13 +294,6 @@ function SignInPage() {
               {submitting
                 ? mode === "signin" ? "Signing in…" : "Creating account…"
                 : mode === "signin" ? `Sign in as ${ROLE_LABEL[role]}` : `Create ${ROLE_LABEL[role]} account`}
-            </button>
-            <button
-              type="button"
-              onClick={() => onQuickDemo(role)}
-              className="inline-flex w-full items-center justify-center rounded-md border-2 border-sky-accent bg-sky-accent/10 px-4 py-2.5 text-sm font-semibold text-sky-accent transition hover:bg-sky-accent hover:text-white"
-            >
-              ⚡ Instant Demo Access ({ROLE_LABEL[role]})
             </button>
           </div>
 

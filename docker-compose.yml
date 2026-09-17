@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   # =========================================================
   # 1. PostgreSQL Relational Database Service
@@ -13,7 +11,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-skyway_secure_pass}
       POSTGRES_DB: ${POSTGRES_DB:-skyway_airlines}
     ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      - "${POSTGRES_PORT:-5433}:5432"
     volumes:
       - skyway_pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -40,8 +38,10 @@ services:
       NODE_ENV: production
       PORT: 3000
       HOST: "0.0.0.0"
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in .env before starting Docker}
       DATABASE_URL: postgres://${POSTGRES_USER:-skyway_admin}:${POSTGRES_PASSWORD:-skyway_secure_pass}@postgres:5432/${POSTGRES_DB:-skyway_airlines}
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    command: ["sh", "-c", "npm run prisma:migrate && npm start"]
     ports:
       - "3000:3000"
     networks:

@@ -9,85 +9,60 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SupportRouteImport } from './routes/support'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as SigninRouteImport } from './routes/signin'
-import { Route as PassengerRouteImport } from './routes/passenger'
-import { Route as OpsRouteImport } from './routes/ops'
-import { Route as AppRouteImport } from './routes/app'
-import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SupportIndexRouteImport } from './routes/support.index'
-import { Route as OpsIndexRouteImport } from './routes/ops.index'
-import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AppRouteImport } from './routes/app'
+import { Route as OpsRouteImport } from './routes/ops'
+import { Route as PassengerRouteImport } from './routes/passenger'
+import { Route as SigninRouteImport } from './routes/signin'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SupportRouteImport } from './routes/support'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
-import { Route as SupportTicketsRouteImport } from './routes/support.tickets'
-import { Route as SupportReportsRouteImport } from './routes/support.reports'
-import { Route as SupportRefundsRouteImport } from './routes/support.refunds'
-import { Route as SupportPassengersRouteImport } from './routes/support.passengers'
-import { Route as SupportNotificationsRouteImport } from './routes/support.notifications'
-import { Route as SupportKnowledgeRouteImport } from './routes/support.knowledge'
-import { Route as SupportComplaintsRouteImport } from './routes/support.complaints'
-import { Route as SupportCompensationRouteImport } from './routes/support.compensation'
-import { Route as SupportChatRouteImport } from './routes/support.chat'
-import { Route as SupportAiRouteImport } from './routes/support.ai'
-import { Route as OpsWeatherRouteImport } from './routes/ops.weather'
-import { Route as OpsTimelineRouteImport } from './routes/ops.timeline'
-import { Route as OpsPassengersRouteImport } from './routes/ops.passengers'
-import { Route as OpsNotificationsRouteImport } from './routes/ops.notifications'
-import { Route as OpsMapRouteImport } from './routes/ops.map'
-import { Route as OpsGatesRouteImport } from './routes/ops.gates'
-import { Route as OpsFlightsRouteImport } from './routes/ops.flights'
-import { Route as OpsDelaysRouteImport } from './routes/ops.delays'
-import { Route as OpsCopilotRouteImport } from './routes/ops.copilot'
-import { Route as OpsAnalyticsRouteImport } from './routes/ops.analytics'
-import { Route as OpsAirportsRouteImport } from './routes/ops.airports'
-import { Route as OpsAiRouteImport } from './routes/ops.ai'
-import { Route as AppSplatRouteImport } from './routes/app.$'
-import { Route as AdminUsersRouteImport } from './routes/admin.users'
-import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
-import { Route as AdminSecurityRouteImport } from './routes/admin.security'
-import { Route as AdminRoutesRouteImport } from './routes/admin.routes'
-import { Route as AdminPricingRouteImport } from './routes/admin.pricing'
-import { Route as AdminNotificationsRouteImport } from './routes/admin.notifications'
-import { Route as AdminLogsRouteImport } from './routes/admin.logs'
-import { Route as AdminFlightsRouteImport } from './routes/admin.flights'
-import { Route as AdminEmployeesRouteImport } from './routes/admin.employees'
-import { Route as AdminAnnouncementsRouteImport } from './routes/admin.announcements'
-import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
-import { Route as AdminAirportsRouteImport } from './routes/admin.airports'
-import { Route as AdminAircraftRouteImport } from './routes/admin.aircraft'
 import { Route as AdminAiRouteImport } from './routes/admin.ai'
+import { Route as AdminAircraftRouteImport } from './routes/admin.aircraft'
+import { Route as AdminAirportsRouteImport } from './routes/admin.airports'
+import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
+import { Route as AdminAnnouncementsRouteImport } from './routes/admin.announcements'
+import { Route as AdminEmployeesRouteImport } from './routes/admin.employees'
+import { Route as AdminFlightsRouteImport } from './routes/admin.flights'
+import { Route as AdminLogsRouteImport } from './routes/admin.logs'
+import { Route as AdminNotificationsRouteImport } from './routes/admin.notifications'
+import { Route as AdminPricingRouteImport } from './routes/admin.pricing'
+import { Route as AdminRoutesRouteImport } from './routes/admin.routes'
+import { Route as AdminSecurityRouteImport } from './routes/admin.security'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppSplatRouteImport } from './routes/app.$'
+import { Route as OpsIndexRouteImport } from './routes/ops.index'
+import { Route as OpsAiRouteImport } from './routes/ops.ai'
+import { Route as OpsAirportsRouteImport } from './routes/ops.airports'
+import { Route as OpsAnalyticsRouteImport } from './routes/ops.analytics'
+import { Route as OpsCopilotRouteImport } from './routes/ops.copilot'
+import { Route as OpsDelaysRouteImport } from './routes/ops.delays'
+import { Route as OpsFlightsRouteImport } from './routes/ops.flights'
+import { Route as OpsGatesRouteImport } from './routes/ops.gates'
+import { Route as OpsMapRouteImport } from './routes/ops.map'
+import { Route as OpsNotificationsRouteImport } from './routes/ops.notifications'
+import { Route as OpsPassengersRouteImport } from './routes/ops.passengers'
+import { Route as OpsTimelineRouteImport } from './routes/ops.timeline'
+import { Route as OpsWeatherRouteImport } from './routes/ops.weather'
+import { Route as SupportIndexRouteImport } from './routes/support.index'
+import { Route as SupportAiRouteImport } from './routes/support.ai'
+import { Route as SupportChatRouteImport } from './routes/support.chat'
+import { Route as SupportCompensationRouteImport } from './routes/support.compensation'
+import { Route as SupportComplaintsRouteImport } from './routes/support.complaints'
+import { Route as SupportKnowledgeRouteImport } from './routes/support.knowledge'
+import { Route as SupportNotificationsRouteImport } from './routes/support.notifications'
+import { Route as SupportPassengersRouteImport } from './routes/support.passengers'
+import { Route as SupportRefundsRouteImport } from './routes/support.refunds'
+import { Route as SupportReportsRouteImport } from './routes/support.reports'
+import { Route as SupportTicketsRouteImport } from './routes/support.tickets'
 import { Route as SupportTicketsTicketIdRouteImport } from './routes/support.tickets.$ticketId'
 
-const SupportRoute = SupportRouteImport.update({
-  id: '/support',
-  path: '/support',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SigninRoute = SigninRouteImport.update({
-  id: '/signin',
-  path: '/signin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PassengerRoute = PassengerRouteImport.update({
-  id: '/passenger',
-  path: '/passenger',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OpsRoute = OpsRouteImport.update({
-  id: '/ops',
-  path: '/ops',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppRoute = AppRouteImport.update({
-  id: '/app',
-  path: '/app',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -95,204 +70,44 @@ const AdminRoute = AdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SupportIndexRoute = SupportIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => SupportRoute,
+const OpsRoute = OpsRouteImport.update({
+  id: '/ops',
+  path: '/ops',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const OpsIndexRoute = OpsIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => OpsRoute,
+const PassengerRoute = PassengerRouteImport.update({
+  id: '/passenger',
+  path: '/passenger',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AppIndexRoute = AppIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AppRoute,
+const SigninRoute = SigninRouteImport.update({
+  id: '/signin',
+  path: '/signin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
-const SupportTicketsRoute = SupportTicketsRouteImport.update({
-  id: '/tickets',
-  path: '/tickets',
-  getParentRoute: () => SupportRoute,
-} as any)
-const SupportReportsRoute = SupportReportsRouteImport.update({
-  id: '/reports',
-  path: '/reports',
-  getParentRoute: () => SupportRoute,
-} as any)
-const SupportRefundsRoute = SupportRefundsRouteImport.update({
-  id: '/refunds',
-  path: '/refunds',
-  getParentRoute: () => SupportRoute,
-} as any)
-const SupportPassengersRoute = SupportPassengersRouteImport.update({
-  id: '/passengers',
-  path: '/passengers',
-  getParentRoute: () => SupportRoute,
-} as any)
-const SupportNotificationsRoute = SupportNotificationsRouteImport.update({
-  id: '/notifications',
-  path: '/notifications',
-  getParentRoute: () => SupportRoute,
-} as any)
-const SupportKnowledgeRoute = SupportKnowledgeRouteImport.update({
-  id: '/knowledge',
-  path: '/knowledge',
-  getParentRoute: () => SupportRoute,
-} as any)
-const SupportComplaintsRoute = SupportComplaintsRouteImport.update({
-  id: '/complaints',
-  path: '/complaints',
-  getParentRoute: () => SupportRoute,
-} as any)
-const SupportCompensationRoute = SupportCompensationRouteImport.update({
-  id: '/compensation',
-  path: '/compensation',
-  getParentRoute: () => SupportRoute,
-} as any)
-const SupportChatRoute = SupportChatRouteImport.update({
-  id: '/chat',
-  path: '/chat',
-  getParentRoute: () => SupportRoute,
-} as any)
-const SupportAiRoute = SupportAiRouteImport.update({
+const AdminAiRoute = AdminAiRouteImport.update({
   id: '/ai',
   path: '/ai',
-  getParentRoute: () => SupportRoute,
-} as any)
-const OpsWeatherRoute = OpsWeatherRouteImport.update({
-  id: '/weather',
-  path: '/weather',
-  getParentRoute: () => OpsRoute,
-} as any)
-const OpsTimelineRoute = OpsTimelineRouteImport.update({
-  id: '/timeline',
-  path: '/timeline',
-  getParentRoute: () => OpsRoute,
-} as any)
-const OpsPassengersRoute = OpsPassengersRouteImport.update({
-  id: '/passengers',
-  path: '/passengers',
-  getParentRoute: () => OpsRoute,
-} as any)
-const OpsNotificationsRoute = OpsNotificationsRouteImport.update({
-  id: '/notifications',
-  path: '/notifications',
-  getParentRoute: () => OpsRoute,
-} as any)
-const OpsMapRoute = OpsMapRouteImport.update({
-  id: '/map',
-  path: '/map',
-  getParentRoute: () => OpsRoute,
-} as any)
-const OpsGatesRoute = OpsGatesRouteImport.update({
-  id: '/gates',
-  path: '/gates',
-  getParentRoute: () => OpsRoute,
-} as any)
-const OpsFlightsRoute = OpsFlightsRouteImport.update({
-  id: '/flights',
-  path: '/flights',
-  getParentRoute: () => OpsRoute,
-} as any)
-const OpsDelaysRoute = OpsDelaysRouteImport.update({
-  id: '/delays',
-  path: '/delays',
-  getParentRoute: () => OpsRoute,
-} as any)
-const OpsCopilotRoute = OpsCopilotRouteImport.update({
-  id: '/copilot',
-  path: '/copilot',
-  getParentRoute: () => OpsRoute,
-} as any)
-const OpsAnalyticsRoute = OpsAnalyticsRouteImport.update({
-  id: '/analytics',
-  path: '/analytics',
-  getParentRoute: () => OpsRoute,
-} as any)
-const OpsAirportsRoute = OpsAirportsRouteImport.update({
-  id: '/airports',
-  path: '/airports',
-  getParentRoute: () => OpsRoute,
-} as any)
-const OpsAiRoute = OpsAiRouteImport.update({
-  id: '/ai',
-  path: '/ai',
-  getParentRoute: () => OpsRoute,
-} as any)
-const AppSplatRoute = AppSplatRouteImport.update({
-  id: '/$',
-  path: '/$',
-  getParentRoute: () => AppRoute,
-} as any)
-const AdminUsersRoute = AdminUsersRouteImport.update({
-  id: '/users',
-  path: '/users',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminSettingsRoute = AdminSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminSecurityRoute = AdminSecurityRouteImport.update({
-  id: '/security',
-  path: '/security',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminRoutesRoute = AdminRoutesRouteImport.update({
-  id: '/routes',
-  path: '/routes',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminPricingRoute = AdminPricingRouteImport.update({
-  id: '/pricing',
-  path: '/pricing',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminNotificationsRoute = AdminNotificationsRouteImport.update({
-  id: '/notifications',
-  path: '/notifications',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminLogsRoute = AdminLogsRouteImport.update({
-  id: '/logs',
-  path: '/logs',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminFlightsRoute = AdminFlightsRouteImport.update({
-  id: '/flights',
-  path: '/flights',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminEmployeesRoute = AdminEmployeesRouteImport.update({
-  id: '/employees',
-  path: '/employees',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminAnnouncementsRoute = AdminAnnouncementsRouteImport.update({
-  id: '/announcements',
-  path: '/announcements',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
-  id: '/analytics',
-  path: '/analytics',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminAirportsRoute = AdminAirportsRouteImport.update({
-  id: '/airports',
-  path: '/airports',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminAircraftRoute = AdminAircraftRouteImport.update({
@@ -300,10 +115,195 @@ const AdminAircraftRoute = AdminAircraftRouteImport.update({
   path: '/aircraft',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminAiRoute = AdminAiRouteImport.update({
+const AdminAirportsRoute = AdminAirportsRouteImport.update({
+  id: '/airports',
+  path: '/airports',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAnnouncementsRoute = AdminAnnouncementsRouteImport.update({
+  id: '/announcements',
+  path: '/announcements',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEmployeesRoute = AdminEmployeesRouteImport.update({
+  id: '/employees',
+  path: '/employees',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminFlightsRoute = AdminFlightsRouteImport.update({
+  id: '/flights',
+  path: '/flights',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLogsRoute = AdminLogsRouteImport.update({
+  id: '/logs',
+  path: '/logs',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminNotificationsRoute = AdminNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPricingRoute = AdminPricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminRoutesRoute = AdminRoutesRouteImport.update({
+  id: '/routes',
+  path: '/routes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSecurityRoute = AdminSecurityRouteImport.update({
+  id: '/security',
+  path: '/security',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSplatRoute = AppSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => AppRoute,
+} as any)
+const OpsIndexRoute = OpsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => OpsRoute,
+} as any)
+const OpsAiRoute = OpsAiRouteImport.update({
   id: '/ai',
   path: '/ai',
-  getParentRoute: () => AdminRoute,
+  getParentRoute: () => OpsRoute,
+} as any)
+const OpsAirportsRoute = OpsAirportsRouteImport.update({
+  id: '/airports',
+  path: '/airports',
+  getParentRoute: () => OpsRoute,
+} as any)
+const OpsAnalyticsRoute = OpsAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => OpsRoute,
+} as any)
+const OpsCopilotRoute = OpsCopilotRouteImport.update({
+  id: '/copilot',
+  path: '/copilot',
+  getParentRoute: () => OpsRoute,
+} as any)
+const OpsDelaysRoute = OpsDelaysRouteImport.update({
+  id: '/delays',
+  path: '/delays',
+  getParentRoute: () => OpsRoute,
+} as any)
+const OpsFlightsRoute = OpsFlightsRouteImport.update({
+  id: '/flights',
+  path: '/flights',
+  getParentRoute: () => OpsRoute,
+} as any)
+const OpsGatesRoute = OpsGatesRouteImport.update({
+  id: '/gates',
+  path: '/gates',
+  getParentRoute: () => OpsRoute,
+} as any)
+const OpsMapRoute = OpsMapRouteImport.update({
+  id: '/map',
+  path: '/map',
+  getParentRoute: () => OpsRoute,
+} as any)
+const OpsNotificationsRoute = OpsNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => OpsRoute,
+} as any)
+const OpsPassengersRoute = OpsPassengersRouteImport.update({
+  id: '/passengers',
+  path: '/passengers',
+  getParentRoute: () => OpsRoute,
+} as any)
+const OpsTimelineRoute = OpsTimelineRouteImport.update({
+  id: '/timeline',
+  path: '/timeline',
+  getParentRoute: () => OpsRoute,
+} as any)
+const OpsWeatherRoute = OpsWeatherRouteImport.update({
+  id: '/weather',
+  path: '/weather',
+  getParentRoute: () => OpsRoute,
+} as any)
+const SupportIndexRoute = SupportIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SupportRoute,
+} as any)
+const SupportAiRoute = SupportAiRouteImport.update({
+  id: '/ai',
+  path: '/ai',
+  getParentRoute: () => SupportRoute,
+} as any)
+const SupportChatRoute = SupportChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => SupportRoute,
+} as any)
+const SupportCompensationRoute = SupportCompensationRouteImport.update({
+  id: '/compensation',
+  path: '/compensation',
+  getParentRoute: () => SupportRoute,
+} as any)
+const SupportComplaintsRoute = SupportComplaintsRouteImport.update({
+  id: '/complaints',
+  path: '/complaints',
+  getParentRoute: () => SupportRoute,
+} as any)
+const SupportKnowledgeRoute = SupportKnowledgeRouteImport.update({
+  id: '/knowledge',
+  path: '/knowledge',
+  getParentRoute: () => SupportRoute,
+} as any)
+const SupportNotificationsRoute = SupportNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => SupportRoute,
+} as any)
+const SupportPassengersRoute = SupportPassengersRouteImport.update({
+  id: '/passengers',
+  path: '/passengers',
+  getParentRoute: () => SupportRoute,
+} as any)
+const SupportRefundsRoute = SupportRefundsRouteImport.update({
+  id: '/refunds',
+  path: '/refunds',
+  getParentRoute: () => SupportRoute,
+} as any)
+const SupportReportsRoute = SupportReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => SupportRoute,
+} as any)
+const SupportTicketsRoute = SupportTicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
+  getParentRoute: () => SupportRoute,
 } as any)
 const SupportTicketsTicketIdRoute = SupportTicketsTicketIdRouteImport.update({
   id: '/$ticketId',
@@ -632,46 +632,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/support': {
-      id: '/support'
-      path: '/support'
-      fullPath: '/support'
-      preLoaderRoute: typeof SupportRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/signin': {
-      id: '/signin'
-      path: '/signin'
-      fullPath: '/signin'
-      preLoaderRoute: typeof SigninRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/passenger': {
-      id: '/passenger'
-      path: '/passenger'
-      fullPath: '/passenger'
-      preLoaderRoute: typeof PassengerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ops': {
-      id: '/ops'
-      path: '/ops'
-      fullPath: '/ops'
-      preLoaderRoute: typeof OpsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/app': {
-      id: '/app'
-      path: '/app'
-      fullPath: '/app'
-      preLoaderRoute: typeof AppRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -681,33 +646,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/support/': {
-      id: '/support/'
-      path: '/'
-      fullPath: '/support/'
-      preLoaderRoute: typeof SupportIndexRouteImport
-      parentRoute: typeof SupportRoute
+    '/ops': {
+      id: '/ops'
+      path: '/ops'
+      fullPath: '/ops'
+      preLoaderRoute: typeof OpsRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/ops/': {
-      id: '/ops/'
-      path: '/'
-      fullPath: '/ops/'
-      preLoaderRoute: typeof OpsIndexRouteImport
-      parentRoute: typeof OpsRoute
+    '/passenger': {
+      id: '/passenger'
+      path: '/passenger'
+      fullPath: '/passenger'
+      preLoaderRoute: typeof PassengerRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/app/': {
-      id: '/app/'
-      path: '/'
-      fullPath: '/app/'
-      preLoaderRoute: typeof AppIndexRouteImport
-      parentRoute: typeof AppRoute
+    '/signin': {
+      id: '/signin'
+      path: '/signin'
+      fullPath: '/signin'
+      preLoaderRoute: typeof SigninRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/admin/': {
       id: '/admin/'
@@ -716,249 +695,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/support/tickets': {
-      id: '/support/tickets'
-      path: '/tickets'
-      fullPath: '/support/tickets'
-      preLoaderRoute: typeof SupportTicketsRouteImport
-      parentRoute: typeof SupportRoute
-    }
-    '/support/reports': {
-      id: '/support/reports'
-      path: '/reports'
-      fullPath: '/support/reports'
-      preLoaderRoute: typeof SupportReportsRouteImport
-      parentRoute: typeof SupportRoute
-    }
-    '/support/refunds': {
-      id: '/support/refunds'
-      path: '/refunds'
-      fullPath: '/support/refunds'
-      preLoaderRoute: typeof SupportRefundsRouteImport
-      parentRoute: typeof SupportRoute
-    }
-    '/support/passengers': {
-      id: '/support/passengers'
-      path: '/passengers'
-      fullPath: '/support/passengers'
-      preLoaderRoute: typeof SupportPassengersRouteImport
-      parentRoute: typeof SupportRoute
-    }
-    '/support/notifications': {
-      id: '/support/notifications'
-      path: '/notifications'
-      fullPath: '/support/notifications'
-      preLoaderRoute: typeof SupportNotificationsRouteImport
-      parentRoute: typeof SupportRoute
-    }
-    '/support/knowledge': {
-      id: '/support/knowledge'
-      path: '/knowledge'
-      fullPath: '/support/knowledge'
-      preLoaderRoute: typeof SupportKnowledgeRouteImport
-      parentRoute: typeof SupportRoute
-    }
-    '/support/complaints': {
-      id: '/support/complaints'
-      path: '/complaints'
-      fullPath: '/support/complaints'
-      preLoaderRoute: typeof SupportComplaintsRouteImport
-      parentRoute: typeof SupportRoute
-    }
-    '/support/compensation': {
-      id: '/support/compensation'
-      path: '/compensation'
-      fullPath: '/support/compensation'
-      preLoaderRoute: typeof SupportCompensationRouteImport
-      parentRoute: typeof SupportRoute
-    }
-    '/support/chat': {
-      id: '/support/chat'
-      path: '/chat'
-      fullPath: '/support/chat'
-      preLoaderRoute: typeof SupportChatRouteImport
-      parentRoute: typeof SupportRoute
-    }
-    '/support/ai': {
-      id: '/support/ai'
+    '/admin/ai': {
+      id: '/admin/ai'
       path: '/ai'
-      fullPath: '/support/ai'
-      preLoaderRoute: typeof SupportAiRouteImport
-      parentRoute: typeof SupportRoute
-    }
-    '/ops/weather': {
-      id: '/ops/weather'
-      path: '/weather'
-      fullPath: '/ops/weather'
-      preLoaderRoute: typeof OpsWeatherRouteImport
-      parentRoute: typeof OpsRoute
-    }
-    '/ops/timeline': {
-      id: '/ops/timeline'
-      path: '/timeline'
-      fullPath: '/ops/timeline'
-      preLoaderRoute: typeof OpsTimelineRouteImport
-      parentRoute: typeof OpsRoute
-    }
-    '/ops/passengers': {
-      id: '/ops/passengers'
-      path: '/passengers'
-      fullPath: '/ops/passengers'
-      preLoaderRoute: typeof OpsPassengersRouteImport
-      parentRoute: typeof OpsRoute
-    }
-    '/ops/notifications': {
-      id: '/ops/notifications'
-      path: '/notifications'
-      fullPath: '/ops/notifications'
-      preLoaderRoute: typeof OpsNotificationsRouteImport
-      parentRoute: typeof OpsRoute
-    }
-    '/ops/map': {
-      id: '/ops/map'
-      path: '/map'
-      fullPath: '/ops/map'
-      preLoaderRoute: typeof OpsMapRouteImport
-      parentRoute: typeof OpsRoute
-    }
-    '/ops/gates': {
-      id: '/ops/gates'
-      path: '/gates'
-      fullPath: '/ops/gates'
-      preLoaderRoute: typeof OpsGatesRouteImport
-      parentRoute: typeof OpsRoute
-    }
-    '/ops/flights': {
-      id: '/ops/flights'
-      path: '/flights'
-      fullPath: '/ops/flights'
-      preLoaderRoute: typeof OpsFlightsRouteImport
-      parentRoute: typeof OpsRoute
-    }
-    '/ops/delays': {
-      id: '/ops/delays'
-      path: '/delays'
-      fullPath: '/ops/delays'
-      preLoaderRoute: typeof OpsDelaysRouteImport
-      parentRoute: typeof OpsRoute
-    }
-    '/ops/copilot': {
-      id: '/ops/copilot'
-      path: '/copilot'
-      fullPath: '/ops/copilot'
-      preLoaderRoute: typeof OpsCopilotRouteImport
-      parentRoute: typeof OpsRoute
-    }
-    '/ops/analytics': {
-      id: '/ops/analytics'
-      path: '/analytics'
-      fullPath: '/ops/analytics'
-      preLoaderRoute: typeof OpsAnalyticsRouteImport
-      parentRoute: typeof OpsRoute
-    }
-    '/ops/airports': {
-      id: '/ops/airports'
-      path: '/airports'
-      fullPath: '/ops/airports'
-      preLoaderRoute: typeof OpsAirportsRouteImport
-      parentRoute: typeof OpsRoute
-    }
-    '/ops/ai': {
-      id: '/ops/ai'
-      path: '/ai'
-      fullPath: '/ops/ai'
-      preLoaderRoute: typeof OpsAiRouteImport
-      parentRoute: typeof OpsRoute
-    }
-    '/app/$': {
-      id: '/app/$'
-      path: '/$'
-      fullPath: '/app/$'
-      preLoaderRoute: typeof AppSplatRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/admin/users': {
-      id: '/admin/users'
-      path: '/users'
-      fullPath: '/admin/users'
-      preLoaderRoute: typeof AdminUsersRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/settings': {
-      id: '/admin/settings'
-      path: '/settings'
-      fullPath: '/admin/settings'
-      preLoaderRoute: typeof AdminSettingsRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/security': {
-      id: '/admin/security'
-      path: '/security'
-      fullPath: '/admin/security'
-      preLoaderRoute: typeof AdminSecurityRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/routes': {
-      id: '/admin/routes'
-      path: '/routes'
-      fullPath: '/admin/routes'
-      preLoaderRoute: typeof AdminRoutesRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/pricing': {
-      id: '/admin/pricing'
-      path: '/pricing'
-      fullPath: '/admin/pricing'
-      preLoaderRoute: typeof AdminPricingRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/notifications': {
-      id: '/admin/notifications'
-      path: '/notifications'
-      fullPath: '/admin/notifications'
-      preLoaderRoute: typeof AdminNotificationsRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/logs': {
-      id: '/admin/logs'
-      path: '/logs'
-      fullPath: '/admin/logs'
-      preLoaderRoute: typeof AdminLogsRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/flights': {
-      id: '/admin/flights'
-      path: '/flights'
-      fullPath: '/admin/flights'
-      preLoaderRoute: typeof AdminFlightsRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/employees': {
-      id: '/admin/employees'
-      path: '/employees'
-      fullPath: '/admin/employees'
-      preLoaderRoute: typeof AdminEmployeesRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/announcements': {
-      id: '/admin/announcements'
-      path: '/announcements'
-      fullPath: '/admin/announcements'
-      preLoaderRoute: typeof AdminAnnouncementsRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/analytics': {
-      id: '/admin/analytics'
-      path: '/analytics'
-      fullPath: '/admin/analytics'
-      preLoaderRoute: typeof AdminAnalyticsRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/airports': {
-      id: '/admin/airports'
-      path: '/airports'
-      fullPath: '/admin/airports'
-      preLoaderRoute: typeof AdminAirportsRouteImport
+      fullPath: '/admin/ai'
+      preLoaderRoute: typeof AdminAiRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/aircraft': {
@@ -968,12 +709,271 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAircraftRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/ai': {
-      id: '/admin/ai'
-      path: '/ai'
-      fullPath: '/admin/ai'
-      preLoaderRoute: typeof AdminAiRouteImport
+    '/admin/airports': {
+      id: '/admin/airports'
+      path: '/airports'
+      fullPath: '/admin/airports'
+      preLoaderRoute: typeof AdminAirportsRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/admin/analytics': {
+      id: '/admin/analytics'
+      path: '/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AdminAnalyticsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/announcements': {
+      id: '/admin/announcements'
+      path: '/announcements'
+      fullPath: '/admin/announcements'
+      preLoaderRoute: typeof AdminAnnouncementsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/employees': {
+      id: '/admin/employees'
+      path: '/employees'
+      fullPath: '/admin/employees'
+      preLoaderRoute: typeof AdminEmployeesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/flights': {
+      id: '/admin/flights'
+      path: '/flights'
+      fullPath: '/admin/flights'
+      preLoaderRoute: typeof AdminFlightsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/logs': {
+      id: '/admin/logs'
+      path: '/logs'
+      fullPath: '/admin/logs'
+      preLoaderRoute: typeof AdminLogsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/notifications': {
+      id: '/admin/notifications'
+      path: '/notifications'
+      fullPath: '/admin/notifications'
+      preLoaderRoute: typeof AdminNotificationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/pricing': {
+      id: '/admin/pricing'
+      path: '/pricing'
+      fullPath: '/admin/pricing'
+      preLoaderRoute: typeof AdminPricingRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/routes': {
+      id: '/admin/routes'
+      path: '/routes'
+      fullPath: '/admin/routes'
+      preLoaderRoute: typeof AdminRoutesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/security': {
+      id: '/admin/security'
+      path: '/security'
+      fullPath: '/admin/security'
+      preLoaderRoute: typeof AdminSecurityRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/$': {
+      id: '/app/$'
+      path: '/$'
+      fullPath: '/app/$'
+      preLoaderRoute: typeof AppSplatRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/ops/': {
+      id: '/ops/'
+      path: '/'
+      fullPath: '/ops/'
+      preLoaderRoute: typeof OpsIndexRouteImport
+      parentRoute: typeof OpsRoute
+    }
+    '/ops/ai': {
+      id: '/ops/ai'
+      path: '/ai'
+      fullPath: '/ops/ai'
+      preLoaderRoute: typeof OpsAiRouteImport
+      parentRoute: typeof OpsRoute
+    }
+    '/ops/airports': {
+      id: '/ops/airports'
+      path: '/airports'
+      fullPath: '/ops/airports'
+      preLoaderRoute: typeof OpsAirportsRouteImport
+      parentRoute: typeof OpsRoute
+    }
+    '/ops/analytics': {
+      id: '/ops/analytics'
+      path: '/analytics'
+      fullPath: '/ops/analytics'
+      preLoaderRoute: typeof OpsAnalyticsRouteImport
+      parentRoute: typeof OpsRoute
+    }
+    '/ops/copilot': {
+      id: '/ops/copilot'
+      path: '/copilot'
+      fullPath: '/ops/copilot'
+      preLoaderRoute: typeof OpsCopilotRouteImport
+      parentRoute: typeof OpsRoute
+    }
+    '/ops/delays': {
+      id: '/ops/delays'
+      path: '/delays'
+      fullPath: '/ops/delays'
+      preLoaderRoute: typeof OpsDelaysRouteImport
+      parentRoute: typeof OpsRoute
+    }
+    '/ops/flights': {
+      id: '/ops/flights'
+      path: '/flights'
+      fullPath: '/ops/flights'
+      preLoaderRoute: typeof OpsFlightsRouteImport
+      parentRoute: typeof OpsRoute
+    }
+    '/ops/gates': {
+      id: '/ops/gates'
+      path: '/gates'
+      fullPath: '/ops/gates'
+      preLoaderRoute: typeof OpsGatesRouteImport
+      parentRoute: typeof OpsRoute
+    }
+    '/ops/map': {
+      id: '/ops/map'
+      path: '/map'
+      fullPath: '/ops/map'
+      preLoaderRoute: typeof OpsMapRouteImport
+      parentRoute: typeof OpsRoute
+    }
+    '/ops/notifications': {
+      id: '/ops/notifications'
+      path: '/notifications'
+      fullPath: '/ops/notifications'
+      preLoaderRoute: typeof OpsNotificationsRouteImport
+      parentRoute: typeof OpsRoute
+    }
+    '/ops/passengers': {
+      id: '/ops/passengers'
+      path: '/passengers'
+      fullPath: '/ops/passengers'
+      preLoaderRoute: typeof OpsPassengersRouteImport
+      parentRoute: typeof OpsRoute
+    }
+    '/ops/timeline': {
+      id: '/ops/timeline'
+      path: '/timeline'
+      fullPath: '/ops/timeline'
+      preLoaderRoute: typeof OpsTimelineRouteImport
+      parentRoute: typeof OpsRoute
+    }
+    '/ops/weather': {
+      id: '/ops/weather'
+      path: '/weather'
+      fullPath: '/ops/weather'
+      preLoaderRoute: typeof OpsWeatherRouteImport
+      parentRoute: typeof OpsRoute
+    }
+    '/support/': {
+      id: '/support/'
+      path: '/'
+      fullPath: '/support/'
+      preLoaderRoute: typeof SupportIndexRouteImport
+      parentRoute: typeof SupportRoute
+    }
+    '/support/ai': {
+      id: '/support/ai'
+      path: '/ai'
+      fullPath: '/support/ai'
+      preLoaderRoute: typeof SupportAiRouteImport
+      parentRoute: typeof SupportRoute
+    }
+    '/support/chat': {
+      id: '/support/chat'
+      path: '/chat'
+      fullPath: '/support/chat'
+      preLoaderRoute: typeof SupportChatRouteImport
+      parentRoute: typeof SupportRoute
+    }
+    '/support/compensation': {
+      id: '/support/compensation'
+      path: '/compensation'
+      fullPath: '/support/compensation'
+      preLoaderRoute: typeof SupportCompensationRouteImport
+      parentRoute: typeof SupportRoute
+    }
+    '/support/complaints': {
+      id: '/support/complaints'
+      path: '/complaints'
+      fullPath: '/support/complaints'
+      preLoaderRoute: typeof SupportComplaintsRouteImport
+      parentRoute: typeof SupportRoute
+    }
+    '/support/knowledge': {
+      id: '/support/knowledge'
+      path: '/knowledge'
+      fullPath: '/support/knowledge'
+      preLoaderRoute: typeof SupportKnowledgeRouteImport
+      parentRoute: typeof SupportRoute
+    }
+    '/support/notifications': {
+      id: '/support/notifications'
+      path: '/notifications'
+      fullPath: '/support/notifications'
+      preLoaderRoute: typeof SupportNotificationsRouteImport
+      parentRoute: typeof SupportRoute
+    }
+    '/support/passengers': {
+      id: '/support/passengers'
+      path: '/passengers'
+      fullPath: '/support/passengers'
+      preLoaderRoute: typeof SupportPassengersRouteImport
+      parentRoute: typeof SupportRoute
+    }
+    '/support/refunds': {
+      id: '/support/refunds'
+      path: '/refunds'
+      fullPath: '/support/refunds'
+      preLoaderRoute: typeof SupportRefundsRouteImport
+      parentRoute: typeof SupportRoute
+    }
+    '/support/reports': {
+      id: '/support/reports'
+      path: '/reports'
+      fullPath: '/support/reports'
+      preLoaderRoute: typeof SupportReportsRouteImport
+      parentRoute: typeof SupportRoute
+    }
+    '/support/tickets': {
+      id: '/support/tickets'
+      path: '/tickets'
+      fullPath: '/support/tickets'
+      preLoaderRoute: typeof SupportTicketsRouteImport
+      parentRoute: typeof SupportRoute
     }
     '/support/tickets/$ticketId': {
       id: '/support/tickets/$ticketId'

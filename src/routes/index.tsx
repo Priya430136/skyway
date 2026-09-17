@@ -7,7 +7,6 @@ import {
   Bell, Smartphone, ChevronDown, Calendar, ArrowLeftRight
 } from "lucide-react";
 import { toast } from "sonner";
-import { useAuth, ROLE_HOME } from "@/lib/auth";
 import heroPlane from "@/assets/hero-plane.jpg";
 import destParis from "@/assets/dest-paris.jpg";
 import destTokyo from "@/assets/dest-tokyo.jpg";
@@ -16,11 +15,39 @@ import destIsland from "@/assets/dest-island.jpg";
 import destDubai from "@/assets/dest-dubai.jpg";
 import destLondon from "@/assets/dest-london.jpg";
 import cabinBusiness from "@/assets/cabin-business.jpg";
-import { LandingFaqSection } from "@/components/landing/LandingFaqSection";
 
 const TITLE = "SkyWay Airlines — Fly Smarter. Travel Better.";
 const DESCRIPTION =
   "Book flights to 250+ destinations with SkyWay Airlines. AI-powered travel assistance, premium cabins, seamless check-in, and world-class service.";
+
+const ROLE_HOME: Record<string, string> = {
+  admin: "/app",
+  agent: "/app",
+  traveler: "/app",
+};
+
+function useAuth() {
+  const [ready, setReady] = useState(false);
+  const [user, setUser] = useState<{ role: string } | null>(null);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("skyway_user");
+      if (stored) setUser(JSON.parse(stored));
+    } catch {
+      setUser(null);
+    } finally {
+      setReady(true);
+    }
+  }, []);
+
+  const signOut = () => {
+    localStorage.removeItem("skyway_user");
+    setUser(null);
+  };
+
+  return { isAuthenticated: !!user, ready, user, signOut };
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -43,8 +70,8 @@ const NAV: { l: string; h?: string; to?: string }[] = [
   { l: "Manage Booking", to: "/app/my-trips" },
   { l: "Flight Status",  to: "/app/flight-status/SW128" },
   { l: "Destinations",   h: "#destinations" },
+  { l: "Travel Info",    to: "/app/help" },
   { l: "Offers",         h: "#offers" },
-  { l: "FAQs",           h: "#faq" },
   { l: "About Us",       h: "#about" },
   { l: "Contact",        to: "/app/help/chat" },
 ];
@@ -109,6 +136,14 @@ const TESTIMONIALS = [
   { n: "Sneha K.",   r: "DEL → LHR", q: "Business class felt like a boutique hotel. Crew were warm, food was exceptional." },
 ];
 
+const FAQS = [
+  { q: "How do I book a flight on SkyWay?", a: "Use the flight search on our home page. Enter your origin, destination, dates, and passenger count — you'll get real-time fares within seconds." },
+  { q: "When can I check in online?",       a: "Online check-in opens 24 hours before departure and closes 90 minutes prior for international flights." },
+  { q: "What is the baggage allowance?",    a: "Economy: 1×23kg checked + 7kg cabin. Business: 2×32kg + 10kg cabin. First: 3×32kg + 10kg cabin." },
+  { q: "Can I change my booking?",          a: "Yes — Flex and Business fares allow free date changes. Saver fares incur a change fee. Manage everything from 'Manage Booking'." },
+  { q: "How do I contact SkyWay support?",  a: "Our contact center runs 24/7 in 12 languages. You can also chat with the AI assistant for instant answers." },
+];
+
 const AIRPORTS = [
   { code: "DEL", city: "Delhi", name: "Indira Gandhi International" },
   { code: "BOM", city: "Mumbai", name: "Chhatrapati Shivaji Maharaj" },
@@ -146,7 +181,7 @@ function Landing() {
   const accountHref = showAccount ? ROLE_HOME[user.role] : "/signin";
 
   return (
-    <div id="top" className="min-h-screen bg-background text-foreground" suppressHydrationWarning>
+    <div id="top" className="min-h-screen bg-background text-foreground">
       {/* ─── NAV ─── */}
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
@@ -635,7 +670,14 @@ function Landing() {
       </section>
 
       {/* ─── FAQ ─── */}
-      <LandingFaqSection />
+      <section id="status" className="bg-sky-mist py-24">
+        <div className="mx-auto max-w-3xl px-4 md:px-6">
+          <SectionHeader eyebrow="FAQ" title={<>Questions, <em className="italic text-sky-gold">answered</em></>} sub="Everything travelers ask, in one place." />
+          <div className="mt-10 space-y-3">
+            {FAQS.map((f, i) => <FaqItem key={i} q={f.q} a={f.a} />)}
+          </div>
+        </div>
+      </section>
 
       {/* ─── FINAL CTA ─── */}
       <section id="contact" className="relative overflow-hidden bg-sky-dark py-24 text-white">
@@ -708,7 +750,7 @@ function Landing() {
               h: "Support",
               l: [
                 { title: "Contact Support", to: "/app/help/chat" },
-                { title: "FAQs & Guides", to: "#faq" },
+                { title: "FAQs & Guides", to: "/app/help" },
                 { title: "Baggage Policy", to: "/app/booking/extras" },
                 { title: "Flight Status", to: "/app/flight-status/SW128" },
               ],
@@ -789,7 +831,7 @@ function FlightSearchWidget({ onSearch }: { onSearch: (routeKey: string) => void
   };
 
   return (
-    <form onSubmit={handleSearchSubmit} className="rounded-2xl border border-white/15 bg-white/10 p-5 shadow-2xl shadow-black/30 backdrop-blur-2xl md:p-6" suppressHydrationWarning>
+    <form onSubmit={handleSearchSubmit} className="rounded-2xl border border-white/15 bg-white/10 p-5 shadow-2xl shadow-black/30 backdrop-blur-2xl md:p-6">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           {(["round","one"] as const).map((k) => (
@@ -933,5 +975,21 @@ function FlightSearchWidget({ onSearch }: { onSearch: (routeKey: string) => void
         </a>
       </div>
     </form>
+  );
+}
+
+function FaqItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="rounded-xl border border-border bg-background shadow-sm">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left cursor-pointer"
+      >
+        <span className="font-display text-lg text-foreground">{q}</span>
+        <ChevronDown className={`h-4 w-4 flex-none text-sky-accent transition ${open ? "rotate-180" : ""}`} />
+      </button>
+      {open && <div className="border-t border-border px-5 py-4 text-sm text-muted-foreground leading-relaxed">{a}</div>}
+    </div>
   );
 }

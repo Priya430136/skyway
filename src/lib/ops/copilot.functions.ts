@@ -257,7 +257,7 @@ How may I assist your dispatch team? You can query:
 }
 
 export const askCopilot = createServerFn({ method: "POST" })
-  .inputValidator((data) =>
+  .validator((data) =>
     z.object({
       messages: z.array(MessageSchema).min(1).max(30),
     }).parse(data),

@@ -13,7 +13,7 @@ const LeadSchema = z.object({
 export type LeadInput = z.infer<typeof LeadSchema>;
 
 export const submitLead = createServerFn({ method: "POST" })
-  .inputValidator((data: unknown) => LeadSchema.parse(data))
+  .validator((data: unknown) => LeadSchema.parse(data))
   .handler(async ({ data }) => {
     const { error, data: row } = await supabaseAdmin
       .from("leads")

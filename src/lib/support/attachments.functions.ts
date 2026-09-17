@@ -35,7 +35,7 @@ async function assertSupportAccess(supabase: any, userId: string) {
 // -------- Create a signed upload URL (client PUTs directly to storage) --------
 export const createAttachmentUploadUrl = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data) =>
+  .validator((data) =>
     z.object({
       ticketId: TICKET_ID,
       fileName: SAFE_NAME,
@@ -72,7 +72,7 @@ export const createAttachmentUploadUrl = createServerFn({ method: "POST" })
 // -------- Confirm upload by inserting the metadata row (RLS enforced) --------
 export const confirmAttachmentUpload = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data) =>
+  .validator((data) =>
     z.object({
       ticketId: TICKET_ID,
       storagePath: z.string().min(1).max(500),
@@ -120,7 +120,7 @@ export const confirmAttachmentUpload = createServerFn({ method: "POST" })
 // -------- List attachments for a ticket with signed download URLs --------
 export const listTicketAttachments = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data) => z.object({ ticketId: TICKET_ID }).parse(data))
+  .validator((data) => z.object({ ticketId: TICKET_ID }).parse(data))
   .handler(async ({ data, context }) => {
     const { supabase } = context;
 
@@ -152,7 +152,7 @@ export const listTicketAttachments = createServerFn({ method: "GET" })
 // -------- Get a fresh signed download URL for one attachment --------
 export const getAttachmentDownloadUrl = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data) =>
+  .validator((data) =>
     z.object({ id: z.string().uuid(), expiresIn: z.number().int().min(10).max(3600).default(60) }).parse(data),
   )
   .handler(async ({ data, context }) => {
@@ -181,7 +181,7 @@ export const getAttachmentDownloadUrl = createServerFn({ method: "POST" })
 // -------- Delete an attachment (RLS enforced) --------
 export const deleteTicketAttachment = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data) => z.object({ id: z.string().uuid() }).parse(data))
+  .validator((data) => z.object({ id: z.string().uuid() }).parse(data))
   .handler(async ({ data, context }) => {
     const { supabase } = context;
 

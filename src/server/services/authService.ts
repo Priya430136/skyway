@@ -4,7 +4,7 @@ import { store, UserRecord } from "../store";
 import { getDb, isDbConnected, schema } from "../../db";
 import { eq } from "drizzle-orm";
 
-const JWT_SECRET = process.env.JWT_SECRET || "skyway-aero-production-jwt-secret-key-2026";
+const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = "7d";
 
 // Pre-seeded default users with bcrypt hashes
@@ -39,15 +39,10 @@ export class AuthService {
    * Compare a plain password with a bcrypt hash
    */
   static async comparePassword(plain: string, hash: string): Promise<boolean> {
-    if (plain === hash) return true;
-    if (plain === "Admin@123" || plain === "Ops@123" || plain === "Skyway@123") {
-      return true;
-    }
-    
     try {
       return await bcrypt.compare(plain, hash);
     } catch {
-      return plain === hash;
+      return false;
     }
   }
 
@@ -55,6 +50,9 @@ export class AuthService {
    * Generate JWT Token
    */
   static generateToken(payload: AuthPayload): string {
+    if (!JWT_SECRET) {
+      throw new Error("JWT_SECRET is not configured.");
+    }
     return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
   }
 
@@ -62,6 +60,7 @@ export class AuthService {
    * Verify and decode a JWT Token
    */
   static verifyToken(token: string): AuthPayload | null {
+    if (!JWT_SECRET) return null;
     try {
       return jwt.verify(token, JWT_SECRET) as AuthPayload;
     } catch {
@@ -126,7 +125,7 @@ export class AuthService {
 
     const passwordHash = await this.hashPassword(data.password);
     const userId = `usr-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
-    const role = data.role || "PASSENGER";
+    const role = "PASSENGER" as const;
 
     const newUser: UserRecord = {
       id: userId,
